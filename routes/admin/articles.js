@@ -87,7 +87,11 @@ router.post('/', async (req, res) => {
   //     data: req.body
   // })
   try {
-    const article = await Article.create(req.body)
+    const body = {
+      title: req.body.title,
+      content: req.body.content
+    }
+    const article = await Article.create(body)
     res.status(201).json({
       status: true,
       message: '创建成功',
