@@ -8,8 +8,17 @@ const {Op} = require('sequelize')
 router.get('/', async (req, res) => {
   try {
     const query = req.query
+    // 分页
+    // 第几页
+    const currentPage = Math.abs(Number(query.currentPage) || 1)
+    // 每页多少条数据
+    const pageSize = Math.abs(Number(query.pageSize)||10)
+    const offset = (currentPage - 1) * pageSize
+
     const condition = {
-      order: [['id', 'DESC']]
+      order: [['id', 'DESC']],
+      limit: pageSize,
+      offset: offset,
     }
 
     if(query.title) {
@@ -20,12 +29,17 @@ router.get('/', async (req, res) => {
       }
     }
 
-    const articles = await Article.findAll(condition)
+    const {count,rows} = await Article.findAndCountAll(condition)
     res.json({
       status: true,
       message: 'Article found successfully.',
       data: {
-        articles: articles
+        articles: rows,
+        pagination: {
+          total: count,
+          currentPage: currentPage,
+          pageSize: pageSize,
+        }
       }
     })
   } catch (error) {
