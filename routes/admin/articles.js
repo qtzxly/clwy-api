@@ -98,11 +98,21 @@ router.post('/', async (req, res) => {
       data: article
     })
   } catch (error) {
-    res.status(500).json({
-      status: false,
-      message: '创建失败',
-      errors: [error.message]
-    })
+    // res.json({error})
+    if(error.name === 'SequelizeValidationError'){
+      const errors = error.errors.map(error => error.message)
+      res.status(400).json({
+        status: false,
+        message: 'data error',
+        errors: errors
+      })
+    } else {
+      res.status(500).json({
+        status: false,
+        message: '创建失败',
+        errors: [error.message]
+      })
+    }
   }
 })
 
