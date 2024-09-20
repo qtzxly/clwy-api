@@ -21,7 +21,7 @@ function filterBody(req){
 async function getArticle (req, res) {
   const {id} = req.params
 
-  const article = await Article.findByPk((id))
+  const article = await Article.findByPk(id)
 
   if(!article){
     throw new NotFoundError(`ID: ${id} Article not found`)

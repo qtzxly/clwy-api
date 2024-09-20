@@ -14,8 +14,43 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Category.init({
-    name: DataTypes.STRING,
-    rank: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: {msg: '名称已存在,请选择其他名称'},
+      validate: {
+        notNull: {
+          msg: 'Name cannot be null.'
+        },
+        notEmpty: {
+          msg: 'Name cannot be empty.'
+        },
+        len:{
+          args: [2, 45],
+          msg: 'Name length should between 2 ~ 45'
+        }
+      }
+    },
+    rank: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Rank cannot be null.'
+        },
+        notEmpty: {
+          msg: 'Rank cannot be empty.'
+        },
+        isInt: {
+          msg: 'Rank must be int.'
+        },
+        isPositive(value) {
+          if(value<=0) {
+            throw new Error('排序必须是正整数')
+          }
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Category',
