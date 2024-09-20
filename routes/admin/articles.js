@@ -215,7 +215,7 @@ router.delete('/:id', async (req, res) => {
     //   errors: [error.message]
     // })
     failure(res, error)
-    
+
   }
 })
 
