@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
     const pageSize = Math.abs(Number(query.pageSize)||10)
     const offset = (currentPage - 1) * pageSize
     const condition = {
-      order: [['id', 'DESC']],
+      order: [['rank', 'ASC'], ['id', 'ASC']],
       limit: pageSize,
       offset: offset,
     }
