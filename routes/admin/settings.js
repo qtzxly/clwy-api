@@ -1,11 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const { Setting } = require('../../models')
-const {
-  NotFoundError,
-  success,
-  failure
-} = require('../../utils/response')
+const { NotFoundError } = require('../../utils/errors');
+const { success, failure } = require('../../utils/responses');
+
 
 /**
  * 公共方法: 白名单过滤

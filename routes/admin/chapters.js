@@ -3,11 +3,9 @@ const router = express.Router()
 
 const { Chapter, Course } = require('../../models')
 const {Op} = require('sequelize')
-const {
-  NotFoundError,
-  success,
-  failure
-} = require('../../utils/response')
+const { NotFoundError } = require('../../utils/errors');
+const { success, failure } = require('../../utils/responses');
+
 
 /**
  * 公共方法：关联课程数据
