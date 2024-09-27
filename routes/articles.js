@@ -36,4 +36,24 @@ router.get('/', async function (req, res) {
   }
 });
 
+/**
+ * 查询文章详情
+ * GET /articles/:id
+ */
+router.get('/:id', async function (req, res) {
+  try {
+    const { id } = req.params;
+
+    const article = await Article.findByPk(id);
+    if (!article) {
+      throw new NotFoundError(`ID: ${ id }的文章未找到。`)
+    }
+
+    success(res, '查询文章成功。', { article });
+  } catch (error) {
+    failure(res, error);
+  }
+});
+
+
 module.exports = router;
