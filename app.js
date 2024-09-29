@@ -4,9 +4,9 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const adminAuth = require('./middlewares/admin-auth');
 const userAuth = require('./middlewares/user-auth');
+const cors = require('cors');
 
 require('dotenv').config();
-
 // 前台路由
 const indexRouter = require('./routes/index');
 const categoriesRouter = require('./routes/categories');
@@ -36,6 +36,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// CORS
+// const corsOptions = {
+//   origin: 'https://clwy.cn',
+// }
+// app.use(cors(corsOptions))
+// app.use(cors())
+
 // 前台路由
 app.use('/', indexRouter);
 app.use('/categories', categoriesRouter);
